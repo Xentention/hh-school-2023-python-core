@@ -1,3 +1,6 @@
+from logger import methods_logger
+
+@methods_logger
 class Market:
 
     def __init__(self, wines: list = None, beers: list = None) -> None:
