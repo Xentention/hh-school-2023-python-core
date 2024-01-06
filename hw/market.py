@@ -1,28 +1,21 @@
+from wine import Wine
+from beer import Beer
+from datetime import date
+
 class Market:
-    def __init__(self, wines: list = None, beers: list = None) -> None:
-        pass
 
-    def has_drink_with_title(self, title=None) -> bool:
-        """
-        Проверяет наличие напитка в магазине за О(1)
+    def __init__(self, wines: list = Wine, beers: list = Beer) -> None:
+        self.drinks = dict((w.title, w) for w in wines) | dict((b.title, b) for b in beers)
 
-        :param title:
-        :return: True|False
-        """
-        pass
+    def has_drink_with_title(self, title=str) -> bool:
+        return title in self.drinks
 
     def get_drinks_sorted_by_title(self) -> list:
-        """
-        Метод получения списка напитков (вина и пива) отсортированных по title
+        return list(dict(sorted(self.drinks.items())).values())
 
-        :return: list
-        """
-        pass
+    def get_drinks_by_production_date(self, from_date=date, to_date=date) -> list:
+        def check_date(pair) -> bool:
+            key, value = pair
+            return from_date <= value.production_date <= to_date;
 
-    def get_drinks_by_production_date(self, from_date=None, to_date=None) -> list:
-        """
-        Метод получения списка напитков в указанном диапазоне дат: с from_date по to_date
-
-        :return: list
-        """
-        pass
+        return list(dict(filter(check_date, self.drinks.items())).values())
