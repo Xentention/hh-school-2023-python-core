@@ -21,5 +21,5 @@ class Market:
             return from_date <= value.production_date and (to_date is None or value.production_date <= to_date);
     
         if from_date is None:
-            return []
+            return list(self.drinks)
         return list(dict(filter(check_date, self.drinks.items())).values())
