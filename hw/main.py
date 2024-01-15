@@ -1,12 +1,39 @@
 from wine import Wine
 from beer import Beer
 from market import Market
+from datetime import date
 
-"""
-TODO: Доработать заготовки классов вина (Wine), пива (Beer) и магазина (Market) таким образом, чтобы через класс Market можно было:
+wines = [
+    Wine("wine1", date.fromisoformat('2019-12-04')), 
+    Wine("wine2", date.fromisoformat('2020-12-04')), 
+    Wine(),
+    Wine("wine3", date.fromisoformat('2021-12-04'))
+]
 
-    * получить список всех напитков (вина и пива) отсортированный по наименованию
-    * проверить наличие напитка в магазине (за время О(1))
-    * получить список напитков (вина и пива) в указанном диапазоне даты производства
-    * (*) написать свой декоратор, который бы логировал начало выполнения метода и выводил время выполнения
-"""
+beers = [
+    Beer("beer1", date.fromisoformat('2019-12-04')), 
+    Beer("beer2", date.fromisoformat('2020-12-04')), 
+    Beer("beer_none"),
+    Beer("beer3", date.fromisoformat('2021-12-04'))
+]
+
+market = Market(wines, beers)
+
+print('Has drink:')
+print(f'Should be true: {market.has_drink_with_title("wine1")}')
+print(f'Should be false: {market.has_drink_with_title("wine5")}')
+print(f'None arg: {market.has_drink_with_title("")}')
+
+print('\n<------------>\n')
+
+print('Sorted by title:')
+print(market.get_drinks_sorted_by_title())
+
+print('\n<------------>\n')
+
+print('Get by prod date:')
+print(f"All where prod_date isn't None: {market.get_drinks_by_production_date(date.fromisoformat('2019-12-04'),  date.fromisoformat('2023-12-04'))}")
+print(f"All where prod_date isn't None but date_to is None: {market.get_drinks_by_production_date(date.fromisoformat('2019-12-04'))}")
+print(f"None args: {market.get_drinks_by_production_date()}")
+print(f"1 Wine 1 Beer: {market.get_drinks_by_production_date(date.fromisoformat('2019-12-04'),  date.fromisoformat('2019-12-05'))}")
+print(f"None: {market.get_drinks_by_production_date(date.fromisoformat('2023-12-04'),  date.fromisoformat('2023-12-04'))}")
